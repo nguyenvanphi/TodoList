@@ -2,7 +2,7 @@
 
 ToDo List built with PHP and the MVC
 
-##Installing
+## Installing
 
 Clone project to your local
 
@@ -18,18 +18,18 @@ composer install
 
 Import `todolist.sql` file in folder Database to your database server.
 
-##UnitTest
+## UnitTest
 
 ```
 phpunit ./vendor/bin/phpunit tests
 ```
 
-##Calendar
+## Calendar
 
 ```
 FullCalendar Library
 ```
 
-##Built With
+## Built With
 
 PHP Language
