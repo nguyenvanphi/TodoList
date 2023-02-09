@@ -18,7 +18,7 @@
 		$works = $workController->index();
 	}
     // Delete work by id
-	if($_SERVER['REQUEST_METHOD'] == "GET" && !empty($_REQUEST['delete'])){
+	if($_SERVER['REQUEST_METHOD'] == "POST" && $_REQUEST['type'] == "DELETE"){
 		$workController->delete();
 		$works = $workController->index();
 	}
@@ -45,11 +45,11 @@
             <h1 class="h1 text-center">Todo List</h1>
             <div class="row mt-4">
                 <div class="col-6">
-                    <a class="btn btn-block btn-info" href="javascript::void()">Calendar Viewer</a>
+                    <a class="btn btn-block btn-info" href="./calendar.php">Calendar Viewer</a>
                 </div>
                 <div class="col-6">
                     <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#addModal">
-                        Create New Work
+                        Add New Work
                     </button>
                 </div>
             </div>
@@ -100,7 +100,9 @@
                                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal<?= $work->id ?>">
                                                 Edit
                                             </button>
-                                            <a href="index.php?delete=<?= $work->id ?>" class="btn btn-danger delete-work">Delete</a>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal<?= $work->id ?>">
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -118,7 +120,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Work Info</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Work</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -226,6 +228,35 @@
                                     </div>
                                 </div>
                             </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-submit-form">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <?php endforeach; ?>
+
+    <!-- Modal Delete Work-->
+    <?php foreach ($works as $index => $work) : ?>
+        <div class="modal fade" id="deleteModal<?= $work->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form method="POST" action="index.php" id="formDelete">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Work</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure delete this work?</p>
+                            <div style="display: none;">
+                                <input name="type" value="DELETE">
+                                <input name="id" value="<?= $work->id ?>" id="id-delete">
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
